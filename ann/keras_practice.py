@@ -3,7 +3,6 @@ from keras.models import Sequential
 model = Sequential()
 
 from keras.layers import Input, Dense
-from keras.models import Model
 import numpy as np
 import random
 import ast
