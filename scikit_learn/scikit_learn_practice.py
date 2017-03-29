@@ -1,6 +1,8 @@
 from sklearn.feature_extraction import DictVectorizer
 from functools import reduce
 import pandas as pd
+import pickle
+import os
 import numpy as np
 
 def test_dict_vectorizer(data):
@@ -36,7 +38,15 @@ def data_transform():
 
 if __name__ == "__main__":
     data = data_transform()
-    vec = test_dict_vectorizer(data)
-    t = vec.transform({'releaseOffice': 'KHI'})
+    vec_model = None
+    vec_file_exists = os.path.exists('../model/vectorizer/vec1.pkl')
+    if(vec_file_exists):
+        vec_file = open('../model/vectorizer/vec1.pkl', 'rb')
+        vec_model = pickle.load(vec_file)
+    else:
+        vec_model = test_dict_vectorizer(data)
+        vec_file = open('../model/vectorizer/vec1.pkl', 'wb')
+        pickle.dump(vec_model, vec_file)
+    t = vec_model.transform({'releaseOffice': 'KHI'})
     print(t)
-    print(vec.get_feature_names())
+    print(vec_model.get_feature_names())
